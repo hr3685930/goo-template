@@ -27,5 +27,5 @@ var Commands = []cli.Command{
                 Action: Example,
             },
         },
-    }
+    },
 }
