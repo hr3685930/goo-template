@@ -3,3 +3,17 @@ app:
   env:  "local"
   debug: true
   err_report: ""
+
+database:
+  default: "sqlite"
+
+queue:
+  default: "local"
+
+cache:
+  default: "sync"
+
+{{- if .IsTrace }}
+trace:
+  endpoint: ""
+{{- end }}
