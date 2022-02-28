@@ -1,0 +1,5 @@
+app:
+  name: "{{ .ProjectName }}"
+  env:  "local"
+  debug: true
+  err_report: ""

@@ -1,0 +1,12 @@
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.out
+*.html
+vendor/
+.idea/
+config.yaml
+main
+sqlite.db
