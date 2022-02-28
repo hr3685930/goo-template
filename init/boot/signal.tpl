@@ -4,11 +4,11 @@ import (
 	"fmt"
 {{- if .IsSentry }}
 	"github.com/getsentry/sentry-go"
+	"time"
 {{- end }}
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 )
 
 // Signal 信号量处理关闭
