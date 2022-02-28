@@ -7,11 +7,11 @@ import (
 // Database default
 type Database struct {
 	Sqlite SQLite
-{{- if (ne .DBDrive "mysql") }}
+{{- if (eq .DBDrive "mysql") }}
 	Mysql Mysql
-{{- else if (ne .DBDrive "postgre") }}
+{{- else if (eq .DBDrive "postgre") }}
 	Postgre Postgre
-{{- else if (ne .DBDrive "clickhouse") }}
+{{- else if (eq .DBDrive "clickhouse") }}
 	Clickhouse Clickhouse
 {{- end }}
 	Default string `default:"sqlite" mapstructure:"default"`

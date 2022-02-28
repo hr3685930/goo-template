@@ -5,9 +5,9 @@ import "github.com/hr3685930/pkg/config"
 // Queue default
 type Queue struct {
 	Default string `default:"local" mapstructure:"default"`
-{{- if (ne .QueueDrive "kafka") }}
+{{- if (eq .QueueDrive "kafka") }}
 	Kafka Kafka
-{{- else if (ne .QueueDrive "rabbitmq") }}
+{{- else if (eq .QueueDrive "rabbitmq") }}
 	Rabbitmq Rabbitmq
 {{- end}}
 	Local Local

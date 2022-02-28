@@ -5,7 +5,7 @@ import "github.com/hr3685930/pkg/config"
 // Cache default once
 type Cache struct {
 	Sync    Sync
-{{- if (ne .CacheDrive "redis") }}
+{{- if (eq .CacheDrive "redis") }}
 	Redis   Redis
 {{- end}}
 	Default string `default:"sync" mapstructure:"default"`

@@ -6,28 +6,27 @@ app:
 
 database:
   default: "{{ .DBDrive }}"
-{{- if (ne .DBDrive "mysql") }}
+{{- if (eq .DBDrive "mysql") }}
   mysql:
     dsn: ""
 
-{{- else if (ne .DBDrive "postgre") }}
+{{- else if (eq .DBDrive "postgre") }}
   postgre:
     dsn: ""
 
-{{- else if (ne .DBDrive "clickhouse") }}
+{{- else if (eq .DBDrive "clickhouse") }}
   clickhouse:
     dsn: ""
 
 {{- end }}
 
-
 queue:
   default: "{{ .QueueDrive }}"
-{{- if (ne .QueueDrive "kafka") }}
+{{- if (eq .QueueDrive "kafka") }}
   kafka:
     addr: ""
 
-{{- else if (ne .QueueDrive "rabbitmq") }}
+{{- else if (eq .QueueDrive "rabbitmq") }}
   rabbitmq:
     host: "127.0.0.1"
     port: "5672"
@@ -39,7 +38,7 @@ queue:
 
 cache:
   default: "{{ .CacheDrive }}"
-{{- if (ne .CacheDrive "redis") }}
+{{- if (eq .CacheDrive "redis") }}
   redis:
     host: "127.0.0.1"
     port: "6379"
