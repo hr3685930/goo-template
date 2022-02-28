@@ -5,13 +5,48 @@ app:
   err_report: ""
 
 database:
-  default: "sqlite"
+  default: "{{ .DBDrive }}"
+{{- if (ne .DBDrive "mysql") }}
+  mysql:
+    dsn: ""
+
+{{- else if (ne .DBDrive "postgre") }}
+  postgre:
+    dsn: ""
+
+{{- else if (ne .DBDrive "clickhouse") }}
+  clickhouse:
+    dsn: ""
+
+{{- end }}
+
 
 queue:
-  default: "local"
+  default: "{{ .QueueDrive }}"
+{{- if (ne .QueueDrive "kafka") }}
+  kafka:
+    addr: ""
+
+{{- else if (ne .QueueDrive "rabbitmq") }}
+  rabbitmq:
+    host: "127.0.0.1"
+    port: "5672"
+    vhost: "/"
+    username: ""
+    password: ""
+
+{{- end}}
 
 cache:
-  default: "sync"
+  default: "{{ .CacheDrive }}"
+{{- if (ne .CacheDrive "redis") }}
+  redis:
+    host: "127.0.0.1"
+    port: "6379"
+    database: "0"
+    auth: ""
+
+{{- end}}
 
 {{- if .IsTrace }}
 

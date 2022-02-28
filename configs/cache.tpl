@@ -5,17 +5,19 @@ import "github.com/hr3685930/pkg/config"
 // Cache default once
 type Cache struct {
 	Sync    Sync
-	//Redis   Redis
+{{- if (ne .CacheDrive "redis") }}
+	Redis   Redis
+{{- end}}
 	Default string `default:"sync" mapstructure:"default"`
 }
 
 // Redis Redis
 type Redis struct {
 	config.RedisDrive
-	Host     string `default:"sync" mapstructure:"host"`
-	Port     string `default:"sync" mapstructure:"port"`
-	Database string `default:"sync" mapstructure:"database"`
-	Auth     string `default:"sync" mapstructure:"auth"`
+	Host     string `default:"127.0.0.1" mapstructure:"host"`
+	Port     string `default:"3306" mapstructure:"port"`
+	Database string `default:"0" mapstructure:"database"`
+	Auth     string `default:"" mapstructure:"auth"`
 }
 
 // Sync Sync
