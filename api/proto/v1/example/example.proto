@@ -12,7 +12,6 @@ message ExampleInfoReq {
   int64 id = 1;
 }
 
-
 message ExampleInfoRes {
   string msg = 1;
 }
