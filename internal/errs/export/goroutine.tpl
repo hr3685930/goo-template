@@ -5,7 +5,7 @@ import (
 	"{{ .ProjectName }}/configs"
 )
 // GoroutineErr Custom Goroutine Err
-func GoroutineErr(err error) {
+func GoroutineErr(stack string) {
 	app := map[string]string{
 		"name":        configs.ENV.App.Name,
 		"environment": configs.ENV.App.Env,
@@ -13,7 +13,7 @@ func GoroutineErr(err error) {
 	option := map[string]interface{}{
 		"error_type": "goroutine_error",
 		"app":        app,
-		"exception":  fmt.Sprintf("%+v\n", err),
+		"exception":  stack,
 	}
 	Report(option, "goroutine error")
 }
