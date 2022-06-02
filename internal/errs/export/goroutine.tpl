@@ -1,7 +1,6 @@
 package export
 
 import (
-	"fmt"
 	"{{ .ProjectName }}/configs"
 )
 // GoroutineErr Custom Goroutine Err
