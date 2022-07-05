@@ -1,9 +1,5 @@
 package {{ .FileName }}
 
-import (
-	"context"
-)
-
 //ES ES
 type ES struct {
 

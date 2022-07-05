@@ -1,9 +1,5 @@
 package {{ .FileName }}
 
-import (
-	"context"
-)
-
 //API API
 type API struct {
 

@@ -1,11 +1,12 @@
 package {{ .FileName }}
 
+{{- if (eq .Types "db") }}
 import (
 	"context"
-{{- if (eq .Types "db") }}
 	"evaluation/internal/models"
-{{- end }}
 )
+{{- end }}
+
 
 //Repo Repo
 var Repo Repository
