@@ -28,4 +28,15 @@ var Commands = []cli.Command{
             },
         },
     },
+    {
+        Name:    "event",
+        Usage:   "kafka事件监听",
+        Subcommands: []cli.Command{
+            {
+                Name:   "example",
+                Usage:  "example topic事件监听",
+                Action: Event,
+            },
+        },
+    },
 }

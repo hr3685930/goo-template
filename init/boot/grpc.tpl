@@ -1,9 +1,11 @@
 package boot
 
 import (
+	proto "{{ .ProjectName }}/api/proto/pb"
 	"{{ .ProjectName }}/configs"
 	"{{ .ProjectName }}/internal/errs"
 	"{{ .ProjectName }}/internal/errs/export"
+	rpcServer "{{ .ProjectName }}/internal/rpc"
 	"fmt"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
@@ -34,6 +36,8 @@ func Grpc() error {
 		healthServer := health.NewServer()
 		healthServer.SetServingStatus("", healthpb.HealthCheckResponse_SERVING)
 		healthpb.RegisterHealthServer(s, healthServer)
+
+		proto.RegisterEventServer(s, rpcServer.NewEvent())
 		reflection.Register(s)
 	})
 

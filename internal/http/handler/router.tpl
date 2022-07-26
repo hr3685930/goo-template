@@ -23,4 +23,6 @@ func Route(e *gin.Engine) {
 	e.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
+
+	e.POST("/event", eventHandler)
 }
