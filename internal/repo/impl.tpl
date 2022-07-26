@@ -3,7 +3,7 @@ package {{ .FileName }}
 {{- if (eq .Types "db") }}
 import (
 	"context"
-	"evaluation/internal/models"
+	"{{ .ProjectName }}/internal/models"
 )
 {{- end }}
 
