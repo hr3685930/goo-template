@@ -35,6 +35,7 @@ var (
 )
 
 const (
+	// ApplicationCloudEventsProtobuf ApplicationCloudEventsProtobuf
 	ApplicationCloudEventsProtobuf = "application/cloudevents+protobuf"
 )
 
@@ -75,7 +76,7 @@ func (protobufFmt) Unmarshal(b []byte, e *event.Event) error {
 	return nil
 }
 
-// convert an SDK cloudevent to a protobuf variant of the cloudevent that can be marshaled.
+// ToProto convert an SDK cloudevent to a protobuf variant of the cloudevent that can be marshaled.
 func ToProto(e *event.Event) (*pb.CloudEvent, error) {
 	container := &pb.CloudEvent{
 		Id:          e.ID(),
@@ -190,7 +191,7 @@ func valueFrom(attr *pb.CloudEventAttributeValue) (interface{}, error) {
 	return types.Validate(v)
 }
 
-// Convert from a protobuf variant into the generic, SDK cloudevent.
+// FromProto Convert from a protobuf variant into the generic, SDK cloudevent.
 func FromProto(container *pb.CloudEvent) (*event.Event, error) {
 	e := event.New()
 	e.SetID(container.Id)

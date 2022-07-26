@@ -6,6 +6,7 @@ import (
 	"github.com/hr3685930/pkg/queue/kafka"
 )
 
+// GetKafkaCli GetKafkaCli
 func GetKafkaCli() sarama.Client {
 	if queue.GetQueueDrive("kafka") != nil {
 		kafkaCli := queue.GetQueueDrive("kafka").(*kafka.Kafka)

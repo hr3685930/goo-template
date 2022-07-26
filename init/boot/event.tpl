@@ -33,12 +33,12 @@ func EventReceive() error {
 			}
 		}
 	}()
-	rpcEvent.SendFn = RpcSend
+	rpcEvent.SendFn = RPCSend
 	return event.NewChanReceive(events.Bus)
 }
 
-// RpcSend RpcSend
-func RpcSend(ctx context.Context, obj interface{}, endpoint string, cloudevent ce.Event) error {
+// RPCSend RPCSend
+func RPCSend(ctx context.Context, obj interface{}, endpoint string, cloudevent ce.Event) error {
 	conn, err := grpc.DialContext(ctx,
 		endpoint,
 		grpc.WithBlock(),
@@ -52,22 +52,22 @@ func RpcSend(ctx context.Context, obj interface{}, endpoint string, cloudevent c
 	)
 
 	if err != nil {
-		return errs.InternalServer("connect error")
+		return errs.InternalError("connect error")
 	}
 	defer conn.Close()
 	msg, err := json.Marshal(obj)
 	if err != nil {
-		return errs.InternalServer("Marshal error")
+		return errs.InternalError("Marshal error")
 	}
 	data := &proto.EventData{Value: string(msg)}
 	err = cloudevent.SetData(format.ContentTypeProtobuf, data)
 	if err != nil {
-		return errs.InternalServer("set event data error")
+		return errs.InternalError("set event data error")
 	}
 	cli := proto.NewEventClient(conn)
 	req, err := format.ToProto(&cloudevent)
 	if err != nil {
-		return errs.InternalServer("event to proto error")
+		return errs.InternalError("event to proto error")
 	}
 	_, err = cli.Send(ctx, req)
 	return nil

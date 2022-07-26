@@ -10,8 +10,8 @@ func RequestTimeout(msg string) error {
 	return rpc.Err(codes.Canceled, msg)
 }
 
-// InternalServer 系统错误
-func InternalServer(msg string) error {
+// InternalError 系统错误
+func InternalError(msg string) error {
 	return rpc.Err(codes.Unknown, msg)
 }
 
