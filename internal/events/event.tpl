@@ -28,7 +28,10 @@ func Bus(ctx context.Context, e cloudevents.Event) protocol.Result {
 		g := goo.NewGroup(10)
 		g.One(ctx, func(ctx context.Context) (interface{}, error) {
 			if err := lis.Handler(e); err != nil {
-				event.EventErr <- err
+				event.EventErrs <- &event.EventErr{
+					Err:   err,
+					Event: e,
+				}
 			}
 			return nil, nil
 		})

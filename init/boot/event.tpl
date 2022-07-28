@@ -21,21 +21,22 @@ import (
 	"time"
 )
 
+
 // EventReceive EventReceive
 func EventReceive() error {
 	go func() {
 		for {
 			select {
-			case err := <-event.EventErr:
-				if e, ok := err.(goo.Error); ok {
-					export.EventErr(e.GetStack())
+			case err := <-event.EventErrs:
+				if e, ok := err.Err.(goo.Error); ok {
+					export.EventErr(e.GetStack(), err.Event)
 				} else {
-					export.EventErr(err.Error())
+					export.EventErr(err.Err.Error(), err.Event)
 				}
 			}
 		}
 	}()
-	rpcEvent.SendFn = RPCSend
+	rpcEvent.SendFn = RpcSend
 	kafka.EventClient = utils.GetKafkaCli()
 	return event.NewChanReceive(events.Bus)
 }

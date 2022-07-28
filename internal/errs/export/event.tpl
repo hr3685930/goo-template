@@ -1,9 +1,13 @@
 package export
 
-import "{{ .ProjectName }}/configs"
+import (
+	"{{ .ProjectName }}/configs"
+	"fmt"
+	cloudevents "github.com/cloudevents/sdk-go/v2"
+)
 
 // EventErr Custom Event Err
-func EventErr(stack string) {
+func EventErr(stack string, e cloudevents.Event) {
 	app := map[string]string{
 		"name":        configs.ENV.App.Name,
 		"environment": configs.ENV.App.Env,
@@ -12,6 +16,7 @@ func EventErr(stack string) {
 		"error_type": "event_error",
 		"app":        app,
 		"exception":  stack,
+		"event_data": fmt.Sprintf("%s", e),
 	}
 	Report(option, "event error")
 }
