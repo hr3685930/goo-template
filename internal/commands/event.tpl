@@ -3,7 +3,6 @@ package commands
 import (
 	"context"
 	"{{ .ProjectName }}/internal/events"
-	"{{ .ProjectName }}/internal/utils"
 	"github.com/hr3685930/pkg/event"
 	"github.com/urfave/cli"
 )
@@ -12,9 +11,8 @@ import (
 func Event(c *cli.Context) {
 	err := event.NewKafkaReceiver(
 		context.Background(),
-		utils.GetKafkaCli(),
 		"demo-topic",
-		"group",
+		"{{ .ProjectName }}",
 		events.Bus,
 	)
 	if err != nil {

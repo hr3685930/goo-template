@@ -7,11 +7,13 @@ import (
 	"{{ .ProjectName }}/internal/errs"
 	"{{ .ProjectName }}/internal/errs/export"
 	"{{ .ProjectName }}/internal/events"
+	"{{ .ProjectName }}/internal/utils"
 	"{{ .ProjectName }}/internal/utils/format"
 	ce "github.com/cloudevents/sdk-go/v2/event"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/hr3685930/pkg/event"
+	"github.com/hr3685930/pkg/event/kafka"
 	rpcEvent "github.com/hr3685930/pkg/event/rpc"
 	"github.com/hr3685930/pkg/goo"
 	"google.golang.org/grpc"
@@ -34,6 +36,7 @@ func EventReceive() error {
 		}
 	}()
 	rpcEvent.SendFn = RPCSend
+	kafka.EventClient = utils.GetKafkaCli()
 	return event.NewChanReceive(events.Bus)
 }
 
