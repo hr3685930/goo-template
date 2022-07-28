@@ -26,6 +26,7 @@ func Grpc() error {
 
 	opts := []grpc.ServerOption{
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+			rpc.UnaryTimeoutInterceptor(time.Second * 5),
 			grpc_opentracing.UnaryServerInterceptor(grpc_opentracing.WithTracer(opentracing.GlobalTracer())),
 			rpc.CustomErrInterceptor(export.GRPCErrorReport),
 			grpc_recovery.UnaryServerInterceptor(recoveryOpts...),
