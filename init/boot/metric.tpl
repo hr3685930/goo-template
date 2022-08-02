@@ -14,7 +14,7 @@ import (
 const metricPort = 9104
 
 // Metric Metric
-func Metric() {
+func Metric() error {
 	// orm
 	db.ConnStore.Range(func(key, value interface{}) bool {
 		k := key.(string)
@@ -41,4 +41,6 @@ func Metric() {
 		http.Handle("/metrics", promhttp.Handler())
 		log.Fatal(http.ListenAndServe(":"+cast.ToString(metricPort), nil))
 	}()
+
+	return nil
 }
