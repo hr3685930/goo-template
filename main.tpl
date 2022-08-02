@@ -62,7 +62,11 @@ func main() {
             return nil, boot.HTTP()
         },
         {{- end }}
-
+        {{- if .IsMetric }}
+        func(ctx context.Context, n interface{}) (interface{}, error) {
+        	return nil, boot.Metric()
+        },
+        {{- end }}
 	)
 	if err != nil {
 		panic(err)

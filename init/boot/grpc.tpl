@@ -10,6 +10,7 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
+	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	"github.com/hr3685930/pkg/rpc"
 	"github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
@@ -26,6 +27,7 @@ func Grpc() error {
 
 	opts := []grpc.ServerOption{
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+			grpc_prometheus.UnaryServerInterceptor,
 			rpc.UnaryTimeoutInterceptor(time.Second * 5),
 			grpc_opentracing.UnaryServerInterceptor(grpc_opentracing.WithTracer(opentracing.GlobalTracer())),
 			rpc.CustomErrInterceptor(export.GRPCErrorReport),
@@ -37,7 +39,7 @@ func Grpc() error {
 		healthServer := health.NewServer()
 		healthServer.SetServingStatus("", healthpb.HealthCheckResponse_SERVING)
 		healthpb.RegisterHealthServer(s, healthServer)
-
+		grpc_prometheus.Register(s)
 		proto.RegisterEventServer(s, rpcServer.NewEvent())
 		reflection.Register(s)
 	})
