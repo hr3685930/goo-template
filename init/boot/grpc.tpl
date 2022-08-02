@@ -17,6 +17,7 @@ import (
 	"google.golang.org/grpc/health"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
+	"time"
 )
 
 //Grpc rpc
@@ -50,5 +51,5 @@ func Grpc() error {
 
 // recoverFunc recover 自定义
 func recoverFunc(p interface{}) (err error) {
-	return errs.InternalServer(fmt.Sprintf("%v", p))
+	return errs.InternalError(fmt.Sprintf("%v", p))
 }
