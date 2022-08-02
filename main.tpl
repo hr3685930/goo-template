@@ -57,7 +57,7 @@ func main() {
         func(ctx context.Context, n interface{}) (interface{}, error) {
         	return nil, boot.Grpc()
         },
-        {{ else }}
+        {{- else }}
         func(ctx context.Context, n interface{}) (interface{}, error) {
             return nil, boot.HTTP()
         },
