@@ -47,6 +47,9 @@ func main() {
         func(ctx context.Context, n interface{}) (interface{}, error) {
             return nil, boot.EventReceive()
         },
+        func(ctx context.Context, n interface{}) (interface{}, error) {
+            return nil, boot.Governance()
+        },
 		func(ctx context.Context, n interface{}) (interface{}, error) {
 			return nil, boot.Signal()
 		},

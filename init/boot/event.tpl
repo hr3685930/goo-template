@@ -16,6 +16,7 @@ import (
 	"github.com/hr3685930/pkg/event/kafka"
 	rpcEvent "github.com/hr3685930/pkg/event/rpc"
 	"github.com/hr3685930/pkg/goo"
+	"github.com/hr3685930/pkg/rpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"time"
@@ -51,6 +52,7 @@ func RPCSend(ctx context.Context, obj interface{}, endpoint string, cloudevent c
 			MinConnectTimeout: time.Second * 5,
 		}),
 		grpc.WithUnaryInterceptor(grpc_middleware.ChainUnaryClient(
+			rpc.UnaryGovernanceClientInterceptor(errs.InternalError("too many request")),
 			grpc_opentracing.UnaryClientInterceptor(),
 		)),
 	)

@@ -39,3 +39,8 @@ func ValidationFailed(msg string) *gin.HttpError {
 func InternalError(msg string) *gin.HttpError {
 	return gin.NewError(http.StatusInternalServerError, 5500, msg)
 }
+
+//TooManyRequestsError TooManyRequestsError
+func TooManyRequestsError(msg string) *gin.HttpError {
+	return gin.NewError(http.StatusTooManyRequests, 4429, msg)
+}

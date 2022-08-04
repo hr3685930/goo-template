@@ -32,6 +32,7 @@ func Grpc() error {
 			rpc.UnaryTimeoutInterceptor(time.Second * 5),
 			grpc_opentracing.UnaryServerInterceptor(grpc_opentracing.WithTracer(opentracing.GlobalTracer())),
 			rpc.CustomErrInterceptor(export.GRPCErrorReport),
+			rpc.UnaryGovernanceServerInterceptor(errs.InternalError("too many request")),
 			grpc_recovery.UnaryServerInterceptor(recoveryOpts...),
 		)),
 	}
