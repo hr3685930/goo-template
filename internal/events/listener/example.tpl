@@ -1,6 +1,9 @@
 package listener
 
-import cloudevents "github.com/cloudevents/sdk-go/v2"
+import (
+	"context"
+	cloudevents "github.com/cloudevents/sdk-go/v2"
+)
 
 // Example Example
 type Example struct {
@@ -13,7 +16,7 @@ func NewExample() *Example {
 }
 
 // Handler Handler
-func (u Example) Handler(event cloudevents.Event) error {
+func (u Example) Handler(ctx context.Context, event cloudevents.Event) error {
 	panic("implement me")
 }
 
