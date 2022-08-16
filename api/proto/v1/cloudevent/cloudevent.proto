@@ -9,11 +9,6 @@ service Event {
   rpc Send(CloudEvent) returns (Empty);
 }
 
-message EventData {
-  string value = 1;
-}
-
-
 message Empty {}
 
 // CloudEvent is copied from

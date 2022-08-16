@@ -65,8 +65,7 @@ func RPCSend(ctx context.Context, obj interface{}, endpoint string, cloudevent c
 	if err != nil {
 		return errs.InternalError("Marshal error")
 	}
-	data := &proto.EventData{Value: string(msg)}
-	err = cloudevent.SetData(format.ContentTypeProtobuf, data)
+	err = cloudevent.SetData(format.ContentTypeProtobuf, msg)
 	if err != nil {
 		return errs.InternalError("set event data error")
 	}
