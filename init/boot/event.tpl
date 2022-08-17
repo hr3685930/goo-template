@@ -75,5 +75,5 @@ func RPCSend(ctx context.Context, obj interface{}, endpoint string, cloudevent c
 		return errs.InternalError("event to proto error")
 	}
 	_, err = cli.Send(ctx, req)
-	return nil
+	return err
 }

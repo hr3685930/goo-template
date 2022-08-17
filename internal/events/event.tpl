@@ -36,10 +36,16 @@ func Bus(ctx context.Context, e cloudevents.Event) protocol.Result {
 					Err:   err,
 					Event: e,
 				}
+			    return nil, err
 			}
 			return nil, nil
 		})
-		g.Wait()
+		_, errArr := g.Wait()
+        for _, err := range errArr {
+            if err != nil {
+                return err
+            }
+        }
 	}
 	return nil
 }
