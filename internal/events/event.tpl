@@ -24,10 +24,13 @@ var Listeners = map[string][]Listener{
 
 // Bus event bus
 func Bus(ctx context.Context, e cloudevents.Event) protocol.Result {
+	if _, ok := Listeners[e.Type()]; !ok {
+        return errs.ResourceNotFound("event not found")
+    }
 	for _, lis := range Listeners[e.Type()] {
 		list := lis
         if err := json.Unmarshal(e.DataEncoded, &list); err != nil {
-            return errs.InternalError("json 解析失败")
+            return errs.InternalError("json unmarshal error")
         }
 		g := goo.NewGroup(10)
 		g.One(ctx, func(ctx context.Context) (interface{}, error) {
