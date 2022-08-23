@@ -29,10 +29,14 @@ func config() {
 	configs.ENV.App.ErrReport = ""
 	configs.ENV.App.Env = "testing"
 	configs.ENV.Queue.Default = "local"
+	{{- if .IsDB }}
 	configs.ENV.Database.Default = "sqlite"
+	{{- end }}
 	configs.ENV.Cache.Default = "sync"
 	boot.Log()
+	{{- if .IsDB }}
 	boot.Database(ctx, true, false)
+	{{- end }}
 	boot.Queue(ctx, true)
 	boot.Cache(ctx, true)
 	boot.App()
