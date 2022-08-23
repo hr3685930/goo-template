@@ -1,7 +1,9 @@
 package main
 
 import (
+    {{- if .IsDB }}
 	"{{ .ProjectName }}/configs"
+    {{- end }}
 	"{{ .ProjectName }}/init/boot"
 	"context"
 	"github.com/aaronjan/hunch"
