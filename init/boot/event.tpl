@@ -37,7 +37,7 @@ func EventReceive() error {
 			}
 		}
 	}()
-	rpcEvent.SendFn = RpcSend
+	rpcEvent.SendFn = RPCSend
 	kafka.EventClient = utils.GetKafkaCli()
 	return event.NewChanReceive(events.Bus)
 }
