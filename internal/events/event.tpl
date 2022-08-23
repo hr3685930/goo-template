@@ -7,6 +7,7 @@ import (
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 	"github.com/cloudevents/sdk-go/v2/protocol"
 	"github.com/hr3685930/pkg/event"
+	"{{ .ProjectName }}/internal/errs"
 	"github.com/hr3685930/pkg/goo"
 )
 
