@@ -20,9 +20,11 @@ func main() {
 				func(ctx context.Context) (interface{}, error) {
 					return nil, boot.Log()
 				},
+	            {{- if .IsDB }}
 				func(ctx context.Context) (interface{}, error) {
 					return nil, boot.Database(ctx, false, configs.ENV.App.Debug)
 				},
+				{{- end }}
 				func(ctx context.Context) (interface{}, error) {
 					return nil, boot.Cache(ctx, false)
 				},

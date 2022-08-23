@@ -4,6 +4,7 @@ app:
   debug: true
   err_report: ""
 
+{{- if .IsDB }}
 database:
   default: "{{ .DBDrive }}"
 {{- if (eq .DBDrive "mysql") }}
@@ -18,6 +19,7 @@ database:
   clickhouse:
     dsn: ""
 
+{{- end }}
 {{- end }}
 
 queue:
