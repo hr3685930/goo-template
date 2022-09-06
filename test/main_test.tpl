@@ -7,6 +7,8 @@ import (
 	"context"
 {{- if (ne .ServiceType "api") }}
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/health"
+    healthpb "google.golang.org/grpc/health/grpc_health_v1"
 {{- end }}
 	"testing"
 )
@@ -16,6 +18,9 @@ func TestMain(m *testing.M) {
 	commands.Migrate(nil)
 {{- if (ne .ServiceType "api") }}
 	RegisterGrpc(func(server *grpc.Server) {
+	    healthServer := health.NewServer()
+        healthServer.SetServingStatus("", healthpb.HealthCheckResponse_SERVING)
+        healthpb.RegisterHealthServer(server, healthServer)
 	})
 {{- end }}
 	m.Run()
