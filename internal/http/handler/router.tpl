@@ -16,8 +16,8 @@ func Route(e *gin.Engine) {
 {{- if .IsTrace }}
 	e.Use(ginTrace.OpenTracing())
 {{- end }}
-	e.Use(g.ErrHandler(export.HTTPErrorReport))
 	e.Use(g.TimeoutMiddleware(time.Second * 10))
+	e.Use(g.ErrHandler(export.HTTPErrorReport))
     e.Use(g.GovernanceMiddleware(func(c *gin.Context) {
         _ = c.Error(errs.TooManyRequestsError("too many request"))
     }))
