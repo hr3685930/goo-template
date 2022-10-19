@@ -1,6 +1,7 @@
 package {{ .FileName }}
 
 {{- if (eq .Types "db") }}
+
 import (
 	"context"
 	"{{ .ProjectName }}/internal/models"
@@ -12,6 +13,7 @@ import (
 var Repo Repository
 
 {{- if (eq .Types "db") }}
+
 // GetListFilter GetListFilter
 type GetListFilter struct {
 
