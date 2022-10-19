@@ -12,10 +12,12 @@ import (
 var Repo Repository
 
 {{- if (eq .Types "db") }}
+// GetListFilter GetListFilter
 type GetListFilter struct {
 
 }
 
+// GetInfoFilter GetInfoFilter
 type GetInfoFilter struct {
 	ID   *int64
 }

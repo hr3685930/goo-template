@@ -17,10 +17,12 @@ func NewDBRepo() *DB {
 	return &DB{orm: db.Orm}
 }
 
+// GetList GetList
 func (d *DB) GetList(ctx context.Context, filter *GetListFilter) (res []*models.{{ .Model }}, err error) {
 	return res, d.orm.WithContext(ctx).Find(&res).Error
 }
 
+// GetInfo GetInfo
 func (d *DB) GetInfo(ctx context.Context, filter *GetInfoFilter) (res *models.{{ .Model }}, err error) {
 	query := d.orm.WithContext(ctx)
 	if filter.ID != nil {
@@ -30,10 +32,12 @@ func (d *DB) GetInfo(ctx context.Context, filter *GetInfoFilter) (res *models.{{
 	return res, query.First(&res).Error
 }
 
+// Save Save
 func (d *DB) Save(ctx context.Context, m *models.{{ .Model }}) error {
 	return d.orm.WithContext(ctx).Save(&m).Error
 }
 
+// Delete Delete
 func (d *DB) Delete(ctx context.Context, m *models.{{ .Model }}) error {
 	return d.orm.WithContext(ctx).Delete(&m).Error
 }
