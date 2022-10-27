@@ -2,7 +2,6 @@ package events
 
 import (
 	"context"
-	"encoding/json"
 	"{{ .ProjectName }}/internal/events/listener"
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 	"github.com/cloudevents/sdk-go/v2/protocol"
@@ -30,9 +29,6 @@ func Bus(ctx context.Context, e cloudevents.Event) protocol.Result {
     }
 	for _, lis := range Listeners[e.Type()] {
 		list := lis
-        if err := json.Unmarshal(e.DataEncoded, &list); err != nil {
-            return errs.InternalError("json unmarshal error")
-        }
 		g := goo.NewGroup(10)
 		g.One(ctx, func(ctx context.Context) (interface{}, error) {
 			if err := list.Handler(ctx, e); err != nil {
