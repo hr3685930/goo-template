@@ -10,15 +10,13 @@ import (
 	"github.com/hr3685930/pkg/goo"
 )
 
-// Listener Listener interface
-type Listener interface {
-	Handler(ctx context.Context, event cloudevents.Event) error
-}
+// Listener Listener func
+type Listener func(ctx context.Context, event cloudevents.Event) error
 
 // Listeners Listeners
 var Listeners = map[string][]Listener{
 	"com.example.create": {
-		listener.NewExample(),
+		listener.Example,
 	},
 }
 
@@ -31,7 +29,7 @@ func Bus(ctx context.Context, e cloudevents.Event) protocol.Result {
 		list := lis
 		g := goo.NewGroup(10)
 		g.One(ctx, func(ctx context.Context) (interface{}, error) {
-			if err := list.Handler(ctx, e); err != nil {
+			if err := list(ctx, e); err != nil {
 				event.EventErrs <- &event.EventErr{
 					Err:   err,
 					Event: e,
