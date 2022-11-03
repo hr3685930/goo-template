@@ -11,14 +11,17 @@ import (
 	"time"
 )
 
+// APIClient APIClient
 type APIClient struct {
 }
 
+// NewAPIClient NewAPIClient
 func NewAPIClient() *APIClient {
 	return &APIClient{}
 }
 
-func (c APIClient) GetRpcConn(ctx context.Context, endpoint string) (conn *grpc.ClientConn, err error) {
+// GetRPCConn GetRPCConn
+func (c APIClient) GetRPCConn(ctx context.Context, endpoint string) (conn *grpc.ClientConn, err error) {
 	return grpc.DialContext(ctx,
 		endpoint,
 		grpc.WithBlock(),
