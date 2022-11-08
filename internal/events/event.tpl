@@ -23,27 +23,26 @@ var Listeners = map[string][]Listener{
 // Bus event bus
 func Bus(ctx context.Context, e cloudevents.Event) protocol.Result {
 	if _, ok := Listeners[e.Type()]; !ok {
-        return errs.ResourceNotFound("event not found")
-    }
+		return errs.ResourceNotFound("event not found")
+	}
+	g := goo.NewGroup(10)
 	for _, lis := range Listeners[e.Type()] {
-		list := lis
-		g := goo.NewGroup(10)
+		listen := lis
 		g.One(ctx, func(ctx context.Context) (interface{}, error) {
-			if err := list(ctx, e); err != nil {
-				event.EventErrs <- &event.EventErr{
-					Err:   err,
-					Event: e,
-				}
-			    return nil, err
+			if err := listen(ctx, e); err != nil {
+				return nil, err
 			}
 			return nil, nil
 		})
-		_, errArr := g.Wait()
-        for _, err := range errArr {
-            if err != nil {
-                return err
-            }
-        }
+	}
+	_, errArr := g.Wait()
+	for _, err := range errArr {
+		if err != nil {
+			event.EventErrs <- &event.EventErr{
+				Err:   err,
+				Event: e,
+			}
+		}
 	}
 	return nil
 }
