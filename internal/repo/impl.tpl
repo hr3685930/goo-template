@@ -8,10 +8,6 @@ import (
 )
 {{- end }}
 
-
-//Repo Repo
-var Repo Repository
-
 {{- if (eq .Types "db") }}
 
 // GetListFilter GetListFilter

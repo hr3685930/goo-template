@@ -3,7 +3,6 @@ package {{ .FileName }}
 import (
 	"context"
 	"{{ .ProjectName }}/internal/models"
-	"github.com/hr3685930/pkg/db"
 	"gorm.io/gorm"
 )
 
@@ -13,8 +12,8 @@ type DB struct {
 }
 
 //NewDBRepo NewDBRepo
-func NewDBRepo() *DB {
-	return &DB{orm: db.Orm}
+func NewDBRepo(db *gorm.DB) *DB {
+	return &DB{orm: db}
 }
 
 // GetList GetList
