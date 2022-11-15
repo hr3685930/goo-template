@@ -1,14 +1,15 @@
 package commands
 
 import (
-	"github.com/hr3685930/pkg/queue"
 	"github.com/urfave/cli"
+	"github.com/hr3685930/pkg/queue"
 	"{{ .ProjectName }}/internal/jobs"
+	"{{ .ProjectName }}/internal/errs/export"
 )
 
 // Example Example
 func Example(c *cli.Context) {
-	ch := make(chan int)
+	ErrExportHandler()
 	queue.NewConsumer("example-topic", queue.Consumers{
 		{
 			Queue:   "example-queue",
@@ -18,5 +19,16 @@ func Example(c *cli.Context) {
 			Timeout: 0,
 		},
 	})
-	<-ch
+}
+
+// ErrExportHandler ErrExportHandler
+func ErrExportHandler() {
+	go func() {
+		for {
+			select {
+			case failedJob := <-queue.ErrJob:
+				export.QueueErrorReport(failedJob)
+			}
+		}
+	}()
 }
