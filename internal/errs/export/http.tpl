@@ -4,6 +4,7 @@ import (
 	"{{ .ProjectName }}/configs"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"fmt"
 )
 
 var dontReportHTTPCode = []int{
@@ -16,6 +17,10 @@ var dontReportHTTPCode = []int{
 
 // HTTPErrorReport HTTPErrorReport
 func HTTPErrorReport(HTTPCode int, response gin.H, stack string, c *gin.Context) {
+	if configs.ENV.App.Env == "local" {
+		fmt.Println(stack)
+		return
+	}
 	isDontReport := false
 	for _, value := range dontReportHTTPCode {
 		if value == HTTPCode {

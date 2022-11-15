@@ -5,6 +5,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
+	"fmt"
 )
 
 var dontReportGrpcCode = []codes.Code{
@@ -13,6 +14,10 @@ var dontReportGrpcCode = []codes.Code{
 
 //GRPCErrorReport GRPCErrorReport
 func GRPCErrorReport(md metadata.MD, req interface{}, stack string, status *status.Status) {
+	if configs.ENV.App.Env == "local" {
+		fmt.Println(stack)
+		return
+	}
 	isDontReport := false
 	for _, value := range dontReportGrpcCode {
 		if value == status.Code() {
