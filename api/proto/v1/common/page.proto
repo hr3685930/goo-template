@@ -1,0 +1,20 @@
+syntax = "proto3";
+package service.common.v1;
+option go_package = "api/proto/pb;proto";
+
+message PageReq {
+  optional int64 limit = 1;
+  optional string next_page_token = 2;
+  optional string last_page_token = 3;
+  repeated Sort sort_by = 4;
+}
+
+message Sort {
+  string key = 1;
+  string sort = 2;
+}
+
+message PageRes {
+  string next_page_token = 1;
+  string last_page_token = 2;
+}
