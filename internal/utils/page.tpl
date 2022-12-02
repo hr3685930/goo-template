@@ -70,6 +70,14 @@ type PageResult struct {
 	LastPageToken *string `json:"last_page_token"`
 }
 
+// PagePBToPageResult PagePBToPageResult
+func PagePBToPageResult(c *proto.PageRes) *PageResult {
+	return &PageResult{
+		NextPageToken: &c.NextPageToken,
+		LastPageToken: &c.LastPageToken,
+	}
+}
+
 // CursorToPageResult CursorToPageResult
 func CursorToPageResult(c paginator.Cursor) *PageResult {
 	return &PageResult{
