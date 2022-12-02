@@ -13,6 +13,27 @@ type PageRequest struct {
 	SortBy        []Sort  `json:"sort_by"`
 }
 
+// ToPagePB ToPagePB
+func (p *PageRequest) ToPagePB() *proto.PageReq {
+	res := &proto.PageReq{}
+	if p.Limit != nil {
+		l := int64(*p.Limit)
+		res.Limit = &l
+	}
+	res.LastPageToken = p.LastPageToken
+	res.NextPageToken = p.NextPageToken
+	if p.SortBy != nil {
+		res.SortBy = make([]*proto.Sort, 0)
+		for _, sort := range p.SortBy {
+			res.SortBy = append(res.SortBy, &proto.Sort{
+				Key:  sort.Key,
+				Sort: sort.Sort,
+			})
+		}
+	}
+	return res
+}
+
 // Sort Sort
 type Sort struct {
 	Key  string `json:"key"`
